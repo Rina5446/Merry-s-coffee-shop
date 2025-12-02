@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Merry's Coffee Shop — Luxury Delivery</title>
+  <link rel="stylesheet" href="styles.css"/>
+
+  <!-- Luxury fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ================= AUTH GATE ================= -->
+<div id="authGate" class="auth-gate">
+  <div class="auth-shell">
+    <div class="auth-left">
+      <div class="brand">
+        <div class="brand-dot"></div>
+        <div>
+          <h1>Merry’s Coffee Shop</h1>
+          <p>Luxury coffee delivery · Ulaanbaatar</p>
+        </div>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="tab-btn active" data-tab="login">Нэвтрэх</button>
+        <button class="tab-btn" data-tab="register">Бүртгүүлэх</button>
+      </div>
+
+      <!-- Login -->
+      <form id="loginForm" class="auth-form active">
+        <label>И-мэйл</label>
+        <input type="email" id="loginEmail" required placeholder="name@email.com"/>
+        <label>Нууц үг</label>
+        <input type="password" id="loginPass" required placeholder="••••••"/>
+        <button class="btn gold full">Нэвтрэх</button>
+        <p class="hint">Бүртгэлгүй юу? <span class="link" data-go="register">Бүртгүүлэх</span></p>
+        <p id="loginMsg" class="msg"></p>
+      </form>
+
+      <!-- Register -->
+      <form id="registerForm" class="auth-form">
+        <label>Нэр</label>
+        <input type="text" id="regName" required placeholder="Таны нэр"/>
+        <label>И-мэйл</label>
+        <input type="email" id="regEmail" required placeholder="name@email.com"/>
+        <label>Нууц үг</label>
+        <input type="password" id="regPass" required minlength="6" placeholder="Min: 6 тэмдэгт"/>
+
+        <label>Найзын урилгын код (хэрвээ байгаа бол)</label>
+        <input type="text" id="regRefCode" placeholder="Ж: MC7F2KQ"/>
+
+        <button class="btn gold full">Бүртгүүлэх</button>
+        <p class="hint">Бүртгэлтэй юу? <span class="link" data-go="login">Нэвтрэх</span></p>
+        <p id="registerMsg" class="msg"></p>
+      </form>
+    </div>
+
+    <div class="auth-right">
+      <div class="auth-hero">
+        <div class="glow"></div>
+        <h2>250+ кофе, <br/>урилгын оноогоо цуглуул.</h2>
+        <p>Найзаа урь, кофегоо өөрөө найруул, coin + оноо цуглуулаад хөнгөлөлт эдэл.</p>
+        <div class="auth-badges">
+          <div class="mini">QPay</div>
+          <div class="mini">Visa / Master</div>
+          <div class="mini">Referral Points</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================= MAIN APP ================= -->
+<div id="appRoot" class="app hidden">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <div class="logo-mark"></div>
+        <div>
+          <div class="logo-title">Merry’s</div>
+          <div class="logo-sub">Coffee Shop</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <!-- SHOP -->
+        <div class="nav-item">
+          <button class="nav-btn" data-menu="shop">Shop ▾</button>
+          <div class="dropdown" id="menu-shop">
+            <button class="dd-item" data-section="home">Нүүр</button>
+            <button class="dd-item" data-section="menu">250 Кофе</button>
+            <button class="dd-item" data-section="extras">Нэмэлт бүтээгдэхүүн</button>
+          </div>
+        </div>
+
+        <!-- BI HIYE -->
+        <div class="nav-item">
+          <button class="nav-btn" data-menu="make">Би хийе ▾</button>
+          <div class="dropdown" id="menu-make">
+            <button class="dd-item" data-section="builder">Кофе найруулах</button>
+            <button class="dd-item" data-section="favorites">Favorites</button>
+          </div>
+        </div>
+
+        <button class="nav-link" data-section="track">Хүргэлт хянах</button>
+        <button class="nav-link" data-section="invite">Найз урьж оноо цуглуулах</button>
+        <button class="nav-link" data-section="about">Бидний тухай</button>
+      </nav>
+
+      <div class="header-actions">
+        <div class="wallet">
+          <span>🪙 Coin:</span>
+          <strong id="coinBalance">0</strong>
+          <button class="btn soft" id="topupCoinBtn">Цэнэглэх</button>
+        </div>
+        <div class="wallet wallet-points">
+          <span>⭐ Points:</span>
+          <strong id="pointsBalance">0</strong>
+        </div>
+        <button class="icon-btn" id="openCartBtn">🛍️ <span id="cartCount" class="badge">0</span></button>
+        <div class="user-chip">
+          <span id="userName">User</span>
+          <button class="ghost" id="logoutBtn">Гарах</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HOME -->
+    <section id="section-home" class="section active">
+      <div class="container hero">
+        <div class="hero-left">
+          <div class="kicker">Luxury Coffee Delivery</div>
+          <h1>Амтаа өөрөө сонго, <br/>найзаа урьж оноо цуглуул.</h1>
+          <p>
+            Merry’s Coffee Shop — Улаанбаатар хотын бүх дүүрэгт хүргэлттэй,
+            250+ төрлийн кофетой luxury coffee house.
+          </p>
+
+          <div class="hero-cta">
+            <button class="btn gold" data-section="menu">250 Кофе үзэх</button>
+            <button class="btn outline" data-section="builder">Би хийе — Найруулах</button>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat"><div class="num">250+</div><div class="label">Кофе төрөл</div></div>
+            <div class="stat"><div class="num">9</div><div class="label">Дүүрэгт хүргэлт</div></div>
+            <div class="stat"><div class="num">⭐</div><div class="label">Referral points</div></div>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="feature-card">
+            <div class="feature-badge">Today’s Signature</div>
+            <h3>Royal Caramel Latte</h3>
+            <p>Cold · Oat Milk · Caramel drizzle</p>
+            <div class="price">12,900₮</div>
+            <button class="btn soft" data-add="sig-royal">Сагсанд нэмэх</button>
+          </div>
+          <div class="orb"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- MENU (250 coffees) -->
+    <section id="section-menu" class="section">
+      <div class="container section-head">
+        <h2>250 Кофе</h2>
+        <p>Дуртай кофегоо сонгоод, өөрийн амтаар дахин найруулж болно.</p>
+      </div>
+
+      <div class="container menu-tools">
+        <input id="searchInput" class="search" placeholder="Кофе хайх... (ж: latte, mocha гэх мэт)" />
+        <select id="filterCategory" class="select">
+          <option value="all">Бүгд</option>
+          <option value="hot">Hot</option>
+          <option value="cold">Cold</option>
+          <option value="bean">Beans</option>
+          <option value="special">Special</option>
+        </select>
+      </div>
+
+      <div class="container grid" id="coffeeGrid"></div>
+      <div class="container center muted" id="menuStatus"></div>
+    </section>
+
+
+    <!-- EXTRAS -->
+    <section id="section-extras" class="section">
+      <div class="container section-head">
+        <h2>Нэмэлт бүтээгдэхүүн</h2>
+        <p>Milk · Syrup · Topping · Pastry</p>
+      </div>
+      <div class="container grid" id="extrasGrid"></div>
+    </section>
+
+
+    <!-- BUILDER -->
+    <section id="section-builder" class="section">
+      <div class="container section-head">
+        <h2>Би хийе — Кофе найруулах</h2>
+        <p>250 төрлөөс аль ч кофегоо суурь болгож, бүгдийг өөрөө найруулна.</p>
+      </div>
+
+      <div class="container builder">
+        <div class="panel">
+          <h3>1. Суурь кофе (250-с сонгогдоно)</h3>
+          <select id="baseCoffeeSelect" class="select full"></select>
+
+          <h3>2. Хэмжээ</h3>
+          <div class="options" id="sizeOptions"></div>
+
+          <h3>3. Hot / Cold</h3>
+          <div class="options" id="tempOptions"></div>
+
+          <h3>4. Сүү</h3>
+          <div class="options" id="milkOptions"></div>
+
+          <h3>5. Syrup</h3>
+          <div class="options" id="syrupOptions"></div>
+
+          <h3>6. Topping</h3>
+          <div class="options" id="toppingOptions"></div>
+
+          <h3>7. Тоо хэмжээ</h3>
+          <div class="qty">
+            <button class="qty-btn" id="decQty">−</button>
+            <span id="qtyValue">1</span>
+            <button class="qty-btn" id="incQty">+</button>
+          </div>
+
+          <button class="btn gold full" id="addCustomBtn">Сагсанд нэмэх</button>
+        </div>
+
+        <div class="preview">
+          <div class="preview-card">
+            <div class="preview-head">
+              <h3>Таны найруулга</h3>
+              <div id="previewTag" class="pill">Hot · Medium</div>
+            </div>
+
+            <div id="previewImage" class="preview-img"></div>
+
+            <ul id="previewList" class="preview-list"></ul>
+
+            <div class="preview-foot">
+              <div>
+                <div class="sub">Нэгж</div>
+                <div id="unitPrice" class="big">0₮</div>
+              </div>
+              <div>
+                <div class="sub">Нийт</div>
+                <div id="totalPrice" class="big">0₮</div>
+              </div>
+            </div>
+
+            <div class="coins-note">
+              1 Coin = <strong id="coinRateText">?</strong>₮ <br/>
+              Coin-оор төлбөл балансаас автоматаар хасагдана. Захиалга бүрээс оноо ч цугларна.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- FAVORITES -->
+    <section id="section-favorites" class="section">
+      <div class="container section-head">
+        <h2>Favorites</h2>
+        <p>Сүүлийн найруулгууд</p>
+      </div>
+      <div class="container grid" id="favoritesGrid"></div>
+    </section>
+
+
+    <!-- TRACK DELIVERY -->
+    <section id="section-track" class="section">
+      <div class="container section-head">
+        <h2>Хүргэлт хянах</h2>
+        <p>Та байршлаа оруулаад хүргэлт хаана явж байгааг map дээрээс харна.</p>
+      </div>
+
+      <div class="container track">
+        <div class="track-panel">
+          <label>Дүүрэг</label>
+          <select id="districtSelect" class="select full">
+            <option>Баянгол</option>
+            <option>Баянзүрх</option>
+            <option>Сүхбаатар</option>
+            <option>Чингэлтэй</option>
+            <option>Хан-Уул</option>
+            <option>Сонгинохайрхан</option>
+            <option>Налайх</option>
+            <option>Багануур</option>
+            <option>Багахангай</option>
+          </select>
+
+          <label>Дэлгэрэнгүй хаяг</label>
+          <input id="addressInput" class="input" placeholder="Хороолол, байр, орц, давхар..." />
+
+          <button id="startTrackBtn" class="btn gold full">Хүргэлт эхлүүлэх</button>
+
+          <div class="track-status">
+            <div class="muted">Статус:</div>
+            <strong id="trackStatusText">Захиалга байхгүй</strong>
+          </div>
+
+          <div class="progress">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+
+          <div class="steps">
+            <div class="step" id="st1">1. Захиалга баталгаажлаа</div>
+            <div class="step" id="st2">2. Бэлтгэж байна</div>
+            <div class="step" id="st3">3. Замд гарлаа</div>
+            <div class="step" id="st4">4. Хүргэгдлээ</div>
+          </div>
+        </div>
+
+        <div class="track-map">
+          <div class="map-canvas">
+            <div class="map-route"></div>
+            <div id="courierDot" class="courier-dot"></div>
+            <div class="map-pin map-store">Merry's</div>
+            <div class="map-pin map-user">Та</div>
+          </div>
+          <div class="courier">
+            🚴 Courier position: <span id="courierPos">—</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- INVITE / REFERRAL -->
+    <section id="section-invite" class="section">
+      <div class="container section-head">
+        <h2>Найз урьж оноо цуглуулах</h2>
+        <p>Урилгын кодоо найздаа явуулаад, бүртгүүлэх бүртээ оноо цуглуулаарай.</p>
+      </div>
+
+      <div class="container invite-layout">
+        <div class="invite-card">
+          <h3>Таны урилгын код</h3>
+          <p class="muted">Найздаа энэ кодыг илгээ. Найз чинь бүртгүүлэхдээ энэ кодыг оруулбал оноо цугларна.</p>
+
+          <div class="ref-row">
+            <code id="myReferralCode">—</code>
+            <button class="btn soft" id="copyRefBtn">Код хуул</button>
+          </div>
+
+          <div class="invite-points">
+            <div>
+              <div class="label">Таны оноо</div>
+              <div class="value"><span id="pointsBalanceBig">0</span>⭐</div>
+            </div>
+            <div>
+              <div class="label">Найз бүр дээр</div>
+              <div class="value">+100⭐ танд, +50⭐ найзад</div>
+            </div>
+          </div>
+
+          <p class="muted small">
+            * Энэ demo дээр оноо нь зөвхөн статистик, бодит төлбөрийн системтэй холбогдоогүй.  
+            Жинхэнэ backend холбовол оноогоор хөнгөлөлт, coupon, coin болгон ашиглаж болно.
+          </p>
+        </div>
+
+        <div class="invite-list-card">
+          <h3>Таниас уригдсан найзууд</h3>
+          <div id="inviteList" class="invite-list muted">
+            Одоогоор найз урьсан мэдээлэл алга.
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ABOUT -->
+    <section id="section-about" class="section">
+      <div class="container about">
+        <div class="about-card">
+          <h2>Бидний тухай</h2>
+          <p>
+            Merry’s Coffee Shop — coffee atelier + delivery үйлчилгээ.
+            Бид single-origin үр, бариста стандарт, luxury амт-мэдрэмжийг
+            танай гэрт хүргэнэ.
+          </p>
+
+          <div class="about-row">
+            <div class="mini-card">
+              <h4>Location</h4>
+              <p>Улаанбаатар · Бүх дүүрэгт хүргэлттэй</p>
+            </div>
+            <div class="mini-card">
+              <h4>Холбоо барих</h4>
+              <p>📞 8810-6797</p>
+            </div>
+            <div class="mini-card">
+              <h4>Хүргэлтийн цаг</h4>
+              <p>09:00 – 23:00</p>
+            </div>
+          </div>
+
+          <div class="districts">
+            <h3>Хүргэлттэй дүүргүүд</h3>
+            <div class="chips">
+              <span class="chip">Баянгол</span><span class="chip">Баянзүрх</span>
+              <span class="chip">Сүхбаатар</span><span class="chip">Чингэлтэй</span>
+              <span class="chip">Хан-Уул</span><span class="chip">Сонгинохайрхан</span>
+              <span class="chip">Налайх</span><span class="chip">Багануур</span><span class="chip">Багахангай</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="footer-brand">Merry’s Coffee Shop</div>
+        <div class="muted">Luxury delivery · Ulaanbaatar</div>
+      </div>
+      <div class="muted">© 2025 Merry’s. All rights reserved.</div>
+    </div>
+  </footer>
+
+
+  <!-- ================= CART DRAWER ================= -->
+  <aside id="cartDrawer" class="cart">
+    <div class="cart-head">
+      <h3>Сагс</h3>
+      <button id="closeCartBtn" class="x">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-foot">
+      <div class="row">
+        <span>Нийт дүн</span>
+        <strong id="cartTotal">0₮</strong>
+      </div>
+
+      <div class="pay-toggle">
+        <button class="pay-btn active" data-pay="qpay">QPay</button>
+        <button class="pay-btn" data-pay="visa">Visa/Master</button>
+        <button class="pay-btn" data-pay="coin">Coin</button>
+      </div>
+
+      <button id="checkoutBtn" class="btn gold full">Төлөх</button>
+      <p id="payMsg" class="msg"></p>
+    </div>
+  </aside>
+  <div id="backdrop" class="backdrop"></div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

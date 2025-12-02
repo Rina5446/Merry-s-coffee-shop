@@ -1,0 +1,82 @@
+[
+  {
+    "id": "coffee-001",
+    "name": "Espresso Royale",
+    "category": "hot",
+    "desc": "Double shot · Velvet crema",
+    "price": 6900,
+    "image": "https://images.unsplash.com/photo-1511920170033-f8396924c348"
+  },
+  {
+    "id": "coffee-002",
+    "name": "Americano Noir",
+    "category": "hot",
+    "desc": "Clean & bold",
+    "price": 8900,
+    "image": "https://images.unsplash.com/photo-1551030173-122aabc4489c"
+  },
+  {
+    "id": "coffee-003",
+    "name": "Silk Latte",
+    "category": "hot",
+    "desc": "Milk foam · smooth",
+    "price": 10900,
+    "image": "https://images.unsplash.com/photo-1541167760496-1628856ab772"
+  },
+  {
+    "id": "coffee-004",
+    "name": "Golden Cappuccino",
+    "category": "hot",
+    "desc": "Cocoa dust · airy foam",
+    "price": 9900,
+    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93"
+  },
+  {
+    "id": "coffee-005",
+    "name": "Dark Mocha",
+    "category": "hot",
+    "desc": "Chocolate · espresso",
+    "price": 11900,
+    "image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd"
+  },
+  {
+    "id": "coffee-006",
+    "name": "Iced Caramel Latte",
+    "category": "cold",
+    "desc": "Cold · caramel drizzle",
+    "price": 12900,
+    "image": "https://images.unsplash.com/photo-1461023058943-07fcbe16d735"
+  },
+  {
+    "id": "coffee-007",
+    "name": "Matcha Espresso Fusion",
+    "category": "special",
+    "desc": "Matcha · espresso layer",
+    "price": 13900,
+    "image": "https://images.unsplash.com/photo-1542372147193-a7aca54189cd"
+  },
+  {
+    "id": "coffee-008",
+    "name": "Ethiopia Yirgacheffe Beans 250g",
+    "category": "bean",
+    "desc": "Floral · citrus",
+    "price": 28900,
+    "image": "https://images.unsplash.com/photo-1512568400610-62da28bc8a13"
+  },
+  {
+    "id": "coffee-009",
+    "name": "Cold Brew Reserve",
+    "category": "cold",
+    "desc": "18h brew · smooth",
+    "price": 12500,
+    "image": "https://images.unsplash.com/photo-1507915135761-41a0a222c709"
+  },
+  {
+    "id": "coffee-010",
+    "name": "Vanilla Oat Latte",
+    "category": "cold",
+    "desc": "Oat milk · vanilla",
+    "price": 13100,
+    "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085"
+  }
+]
